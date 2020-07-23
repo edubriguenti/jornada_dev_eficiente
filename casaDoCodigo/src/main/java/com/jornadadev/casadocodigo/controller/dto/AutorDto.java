@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.controller;
+package com.jornadadev.casadocodigo.controller.dto;
 
 import com.jornadadev.casadocodigo.entity.Autor;
 import lombok.Data;
@@ -9,13 +9,13 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
-public class AutorForm {
+public class AutorDto {
 
     @Email
-    @NotBlank(message = "O e-mail é obrigatório.")
+    @NotBlank
     private String email;
 
-    @NotBlank(message = "Nome é obrigatório.")
+    @NotBlank
     private String nome;
 
     @Size(max = 400)

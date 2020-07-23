@@ -1,6 +1,7 @@
 package com.jornadadev.casadocodigo.entity;
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
+@ToString
 public class Autor {
 
     @Id

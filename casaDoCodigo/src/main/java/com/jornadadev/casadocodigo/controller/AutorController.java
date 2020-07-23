@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.controller;
 
+import com.jornadadev.casadocodigo.controller.dto.AutorDto;
 import com.jornadadev.casadocodigo.entity.Autor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,20 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/autor")
+//2 pontos de carga intrinseca
 public class AutorController {
 
     private final EntityManager em;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> cadastrarAutor(@Valid @RequestBody AutorForm autorForm) {
-        Autor autor = autorForm.toModel();
+    public ResponseEntity<String> cadastrarAutor(@Valid @RequestBody AutorDto autorDto) {
+        Autor autor = autorDto.toModel();
         em.persist(autor);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(autor.toString());
     }
 
 }
+
