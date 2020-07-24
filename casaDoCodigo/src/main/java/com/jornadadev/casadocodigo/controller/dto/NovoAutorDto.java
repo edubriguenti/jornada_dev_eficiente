@@ -1,15 +1,15 @@
 package com.jornadadev.casadocodigo.controller.dto;
 
 import com.jornadadev.casadocodigo.entity.Autor;
-import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Data
-public class AutorDto {
+@Getter
+public class NovoAutorDto {
 
     @Email
     @NotBlank
