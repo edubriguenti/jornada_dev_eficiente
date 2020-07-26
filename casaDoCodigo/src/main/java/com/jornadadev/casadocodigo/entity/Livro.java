@@ -1,6 +1,5 @@
 package com.jornadadev.casadocodigo.entity;
 
-import com.jornadadev.casadocodigo.config.UniqueValue;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -9,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 @Entity
 @ToString
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"nome"}),
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"titulo"}),
         @UniqueConstraint(columnNames = {"isbn"})})
 public class Livro {
 
@@ -31,6 +31,7 @@ public class Livro {
     @NotBlank
     @Size(max = 500)
     private String resumo;
+    @NotBlank
     private String sumario;
     @NotNull
     @Min(value = 20)
@@ -39,15 +40,19 @@ public class Livro {
     @Min(100)
     private Integer paginas;
     @NotEmpty
-    @UniqueValue(fieldName = "isbn", domainClass = Livro.class)
     private String isbn;
     @Future
+    @NotNull
     private LocalDate dataPublicacao;
+
     @NotNull
     @ManyToOne
+    @Valid
     private Categoria categoria;
+
     @NotNull
     @ManyToOne
+    @Valid
     private Autor autor;
 
     @Deprecated

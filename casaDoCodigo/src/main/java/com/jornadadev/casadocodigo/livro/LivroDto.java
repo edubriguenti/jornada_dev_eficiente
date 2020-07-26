@@ -1,13 +1,18 @@
 package com.jornadadev.casadocodigo.livro;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jornadadev.casadocodigo.config.ExistsId;
 import com.jornadadev.casadocodigo.config.UniqueValue;
 import com.jornadadev.casadocodigo.entity.Autor;
 import com.jornadadev.casadocodigo.entity.Categoria;
 import com.jornadadev.casadocodigo.entity.Livro;
 import lombok.Getter;
+import lombok.ToString;
+import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -17,6 +22,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
+@ToString
 public class LivroDto {
 
     @NotBlank
@@ -25,6 +31,8 @@ public class LivroDto {
     @NotBlank
     @Size(max = 500)
     private String resumo;
+
+    @NotBlank
     private String sumario;
     @NotNull
     @Min(value = 20)
@@ -40,11 +48,18 @@ public class LivroDto {
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate dataPublicacao;
     @NotNull
-    private Categoria categoria;
+    @ExistsId(fieldName = "id", domainClass = Categoria.class)
+    private Integer idCategoria;
     @NotNull
-    private Autor autor;
+    @ExistsId(fieldName= "id", domainClass = Autor.class)
+    private Integer idAutor;
 
-    public Livro toModel() {
-        return new Livro(titulo, resumo, sumario, preco, paginas, isbn, dataPublicacao, categoria, autor);
+    public Livro toModel(EntityManager em) {
+        Categoria categoria = em.find(Categoria.class, idCategoria);
+        Autor autor = em.find(Autor.class, idAutor);
+        Assert.state(categoria != null, "A categoria está nula: "+ idCategoria);
+        Assert.state(autor != null, "O autor está nulo: "+ idAutor);
+        Livro livro = new Livro(titulo, resumo, sumario, preco, paginas, isbn, dataPublicacao, categoria, autor);
+        return  livro;
     }
 }

@@ -1,6 +1,5 @@
 package com.jornadadev.casadocodigo.livro;
 
-import com.jornadadev.casadocodigo.entity.Categoria;
 import com.jornadadev.casadocodigo.entity.Livro;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import javax.validation.Valid;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/livro")
 //3 pontos de carga intrínseca
 public class LivroController {
 
@@ -26,7 +25,8 @@ public class LivroController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> cadastrarLivro(@Valid @RequestBody LivroDto livroDto) {
-        final Livro livro = livroDto.toModel();
+        System.out.println(livroDto);
+        final Livro livro = livroDto.toModel(em);
         em.persist(livro);
         return ResponseEntity.ok().body(livro.toString());
     }
