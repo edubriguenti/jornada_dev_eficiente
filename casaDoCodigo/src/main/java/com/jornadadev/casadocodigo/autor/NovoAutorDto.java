@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.autor;
 
+import com.jornadadev.casadocodigo.config.UniqueValue;
 import com.jornadadev.casadocodigo.entity.Autor;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class NovoAutorDto {
 
     @Email
     @NotBlank
+    @UniqueValue(fieldName = "email", domainClass = Autor.class)
     private String email;
 
     @NotBlank
