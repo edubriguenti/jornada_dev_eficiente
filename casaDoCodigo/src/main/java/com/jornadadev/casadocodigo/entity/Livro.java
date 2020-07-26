@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.entity;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 
 @Entity
 @ToString
+@Getter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"titulo"}),
         @UniqueConstraint(columnNames = {"isbn"})})
 public class Livro {
