@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.controller.dto;
+package com.jornadadev.casadocodigo.autor;
 
 import com.jornadadev.casadocodigo.entity.Autor;
 import lombok.Getter;

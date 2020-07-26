@@ -25,11 +25,11 @@ public class Autor {
     private Integer id;
 
     @Email
-    @NotBlank(message = "O e-mail é obrigatório.")
+    @NotBlank
     @Column(name = "email")
     private String email;
 
-    @NotBlank(message = "Nome é obrigatório.")
+    @NotBlank
     private String nome;
 
     @Size(max = 400)

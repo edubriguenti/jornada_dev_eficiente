@@ -1,6 +1,5 @@
-package com.jornadadev.casadocodigo.controller;
+package com.jornadadev.casadocodigo.autor;
 
-import com.jornadadev.casadocodigo.controller.dto.NovoAutorDto;
 import com.jornadadev.casadocodigo.entity.Autor;
 import com.jornadadev.casadocodigo.repository.AutorRepository;
 import lombok.RequiredArgsConstructor;
