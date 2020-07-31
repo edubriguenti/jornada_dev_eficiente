@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @ToString
+@Getter
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"email"})})
 public class Autor {
 

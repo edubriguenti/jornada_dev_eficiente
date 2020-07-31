@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,10 +43,11 @@ public class LivroController {
     @GetMapping
     public ResponseEntity<List<LivrosCadastradosDto>> obterLivrosCadastrados() {
         final List<Livro> livros = livroRepository.findAll();
-        final List<LivrosCadastradosDto> livrosDto = new ArrayList<>();
         final List<LivrosCadastradosDto> livrosCadastrados = livros.stream().map
                 (l -> new LivrosCadastradosDto(l.getId(), l.getTitulo())).collect(Collectors.toList());
         return ResponseEntity.ok().body(livrosCadastrados);
     }
+
+
 }
 
