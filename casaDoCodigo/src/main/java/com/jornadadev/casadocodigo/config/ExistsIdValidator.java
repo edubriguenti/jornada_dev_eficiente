@@ -23,6 +23,9 @@ public class ExistsIdValidator implements ConstraintValidator<ExistsId, Integer>
 
     @Override
     public boolean isValid(Integer valor, ConstraintValidatorContext constraintValidatorContext) {
+        if (valor == null)
+            return true;
+
         Query query = em.createQuery("select 1 from " + aClass.getName() + " where " +
                                      domainAttribute + " =:value ");
         query.setParameter("value", valor);

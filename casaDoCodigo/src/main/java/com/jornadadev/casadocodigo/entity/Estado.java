@@ -4,6 +4,7 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Estado {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @NotBlank
@@ -22,6 +23,7 @@ public class Estado {
 
     @ManyToOne
     @NotNull
+    @ToString.Exclude
     private Pais pais;
 
     public Estado(String nome, Pais pais) {
@@ -32,5 +34,9 @@ public class Estado {
     @Deprecated
     protected Estado(){
 
+    }
+
+    public boolean pertence(Pais pais) {
+        return this.pais.equals(pais);
     }
 }
