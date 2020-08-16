@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class Autor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Email

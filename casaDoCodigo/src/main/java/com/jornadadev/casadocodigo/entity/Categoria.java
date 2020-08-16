@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"nome"})})
 public class Categoria {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank

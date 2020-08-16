@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -24,10 +26,11 @@ import java.time.LocalDate;
 @Getter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"titulo"}),
         @UniqueConstraint(columnNames = {"isbn"})})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotBlank
     private String titulo;
@@ -38,11 +41,12 @@ public class Livro {
     private String sumario;
     @NotNull
     @Min(value = 20)
-    private Double preco;
+    private BigDecimal preco;
     @NotNull
     @Min(100)
     private Integer paginas;
     @NotEmpty
+    @EqualsAndHashCode.Include
     private String isbn;
     @Future
     @NotNull
@@ -63,7 +67,7 @@ public class Livro {
     }
 
     public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, String sumario,
-                 @NotNull @Min(value = 20) Double preco, @NotNull @Min(100) Integer paginas,
+                 @NotNull @Min(value = 20) BigDecimal preco, @NotNull @Min(100) Integer paginas,
                  @NotEmpty String isbn, @Future LocalDate dataPublicacao, @NotNull Categoria categoria,
                  @NotNull Autor autor) {
         this.titulo = titulo;

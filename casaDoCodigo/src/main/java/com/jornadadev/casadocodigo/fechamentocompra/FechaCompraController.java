@@ -1,6 +1,7 @@
 package com.jornadadev.casadocodigo.fechamentocompra;
 
 import com.jornadadev.casadocodigo.entity.Compra;
+import com.jornadadev.casadocodigo.repository.CupomDescontoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class FechaCompraController {
     private final EntityManager em;
     private final VerificarDocumentoCpfCnpjValidator verificarDocumentoCpfCnpjValidator;
     private final EstadoPertenceAPaisValidator estadoPertenceAPaisValidator;
+    private final CupomDescontoRepository cupomDescontoRepository;
 
 
     @InitBinder
@@ -35,9 +37,9 @@ public class FechaCompraController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> fechaCompra(@Valid @RequestBody NovaCompraRequest novaCompraRequest) {
-        final Compra compra = novaCompraRequest.toModel(em);
-        //em.persist(compra);
-        return ResponseEntity.accepted().body(compra.toString());
+        final Compra novaCompra = novaCompraRequest.toModel(em, cupomDescontoRepository);
+        em.persist(novaCompra);
+        return ResponseEntity.accepted().body(novaCompra.toString());
     }
 }
 

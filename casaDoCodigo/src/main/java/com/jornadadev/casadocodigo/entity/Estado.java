@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Estado {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank

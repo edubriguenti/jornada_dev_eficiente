@@ -19,6 +19,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -36,7 +37,7 @@ public class LivroDto {
     private String sumario;
     @NotNull
     @Min(value = 20)
-    private Double preco;
+    private BigDecimal preco;
     @NotNull
     @Min(100)
     private Integer paginas;

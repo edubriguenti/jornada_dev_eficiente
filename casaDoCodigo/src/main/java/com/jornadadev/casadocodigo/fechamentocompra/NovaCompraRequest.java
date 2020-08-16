@@ -4,6 +4,8 @@ import com.jornadadev.casadocodigo.config.ExistsId;
 import com.jornadadev.casadocodigo.entity.Compra;
 import com.jornadadev.casadocodigo.entity.Estado;
 import com.jornadadev.casadocodigo.entity.Pais;
+import com.jornadadev.casadocodigo.entity.Pedido;
+import com.jornadadev.casadocodigo.repository.CupomDescontoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.function.Function;
 
 @ToString
 @AllArgsConstructor
@@ -52,13 +55,21 @@ public class NovaCompraRequest {
     @Getter
     private NovoPedidoRequest pedido;
 
+    @Valid
+    private CupomDescontoRequest cupom;
 
 
-    public Compra toModel(EntityManager em) {
+
+    public Compra toModel(EntityManager em, CupomDescontoRepository cupomDescontoRepository) {
         @NotNull final Pais pais = em.find(Pais.class, this.pais);
-        final Compra compra = new Compra(email, nome, sobrenome, documento, endereco, complemento, cidade, pais, telefone, cep);
+        final Function<Compra, Pedido> funcaoCriacaoDePedido = this.pedido.toModel(em);
+        final Compra compra = new Compra(email, nome, sobrenome, documento, endereco, complemento, cidade, pais,
+                telefone, cep, funcaoCriacaoDePedido);
         if (this.estado != null) {
             compra.setEstado(em.find(Estado.class, this.estado));
+        }
+        if (cupom != null) {
+            compra.setCupomDesconto(cupom.toModel(cupomDescontoRepository));
         }
         return compra;
     }

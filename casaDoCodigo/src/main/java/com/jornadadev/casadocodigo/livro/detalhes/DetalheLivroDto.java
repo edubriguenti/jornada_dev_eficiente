@@ -3,6 +3,7 @@ package com.jornadadev.casadocodigo.livro.detalhes;
 import com.jornadadev.casadocodigo.entity.Livro;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -10,7 +11,7 @@ public class DetalheLivroDto {
 
     private String isbn;
     private Integer paginas;
-    private Double preco;
+    private BigDecimal preco;
     private String resumo;
     private String sumario;
     private DetalheAutorDto autor;

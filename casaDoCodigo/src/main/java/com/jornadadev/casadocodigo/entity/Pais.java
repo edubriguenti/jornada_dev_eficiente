@@ -23,7 +23,7 @@ import java.util.List;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"nome"})})
 public class Pais {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank
