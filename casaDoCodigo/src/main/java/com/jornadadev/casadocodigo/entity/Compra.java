@@ -1,10 +1,10 @@
 package com.jornadadev.casadocodigo.entity;
 
-import lombok.Setter;
 import lombok.ToString;
 import org.springframework.util.Assert;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -62,8 +62,8 @@ public class Compra {
     @OneToOne(mappedBy = "compra", cascade = CascadeType.PERSIST)
     private Pedido pedido;
 
-    @OneToOne
-    private CupomDesconto cupomDesconto;
+    @Embedded
+    private CupomAplicado cupomAplicado;
 
     public Compra(@Email @NotBlank String email, @NotBlank String nome, @NotBlank String sobrenome,
                   @NotBlank String documento, @NotBlank String endereco, @NotBlank String complemento,
@@ -82,8 +82,9 @@ public class Compra {
         this.pedido = funcaoCriacaoDePedido.apply(this);
     }
 
-    public void aplicarDesconto(CupomDesconto cupomDesconto) {
-        this.cupomDesconto = cupomDesconto;
+    @Deprecated
+    protected Compra() {
+
     }
 
     public void setEstado(@NotNull @Valid Estado estado) {
@@ -92,8 +93,10 @@ public class Compra {
         this.estado = estado;
     }
 
-    @Deprecated
-    protected Compra() {
-
+    public void aplicaCupomDesconto(CupomDesconto cupomDesconto) {
+        Assert.isTrue(cupomDesconto != null, "É necessário aplicar um cupom existente.");
+        Assert.isNull(this.cupomAplicado, "Não é possível aplicar um novo cupom para uma compra.");
+        Assert.isTrue(cupomDesconto.isValido(), "O cupom de desconto não é válido.");
+        this.cupomAplicado = new CupomAplicado(cupomDesconto);
     }
 }

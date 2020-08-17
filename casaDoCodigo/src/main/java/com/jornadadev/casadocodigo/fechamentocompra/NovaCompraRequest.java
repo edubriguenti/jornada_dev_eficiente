@@ -2,6 +2,7 @@ package com.jornadadev.casadocodigo.fechamentocompra;
 
 import com.jornadadev.casadocodigo.config.ExistsId;
 import com.jornadadev.casadocodigo.entity.Compra;
+import com.jornadadev.casadocodigo.entity.CupomDesconto;
 import com.jornadadev.casadocodigo.entity.Estado;
 import com.jornadadev.casadocodigo.entity.Pais;
 import com.jornadadev.casadocodigo.entity.Pedido;
@@ -12,12 +13,14 @@ import lombok.ToString;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 import java.util.function.Function;
 
 @ToString
@@ -55,10 +58,8 @@ public class NovaCompraRequest {
     @Getter
     private NovoPedidoRequest pedido;
 
-    @Valid
-    private CupomDescontoRequest cupom;
-
-
+    @ExistsId(domainClass = CupomDesconto.class, fieldName = "codigo")
+    private String codigoCupom;
 
     public Compra toModel(EntityManager em, CupomDescontoRepository cupomDescontoRepository) {
         @NotNull final Pais pais = em.find(Pais.class, this.pais);
@@ -68,8 +69,8 @@ public class NovaCompraRequest {
         if (this.estado != null) {
             compra.setEstado(em.find(Estado.class, this.estado));
         }
-        if (cupom != null) {
-            compra.setCupomDesconto(cupom.toModel(cupomDescontoRepository));
+        if (StringUtils.hasText(codigoCupom)) {
+            compra.aplicaCupomDesconto(cupomDescontoRepository.getByCodigo(codigoCupom));
         }
         return compra;
     }
@@ -88,4 +89,9 @@ public class NovaCompraRequest {
     public boolean temEstado() {
         return estado != null;
     }
+
+    public Optional<String> getCupomDesconto(){
+        return Optional.ofNullable(codigoCupom);
+    }
+
 }

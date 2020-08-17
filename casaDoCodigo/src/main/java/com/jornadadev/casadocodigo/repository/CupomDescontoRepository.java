@@ -9,5 +9,10 @@ import java.util.List;
 
 @Repository
 public interface CupomDescontoRepository extends CrudRepository<CupomDesconto, Long> {
-    CupomDesconto findByCodigo(String codigo);
+    /**
+     * Busca um cupom que existe.
+     * @param codigo
+     * @return
+     */
+    CupomDesconto getByCodigo(String codigo);
 }

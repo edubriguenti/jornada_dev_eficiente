@@ -25,12 +25,13 @@ public class FechaCompraController {
     private final EntityManager em;
     private final VerificarDocumentoCpfCnpjValidator verificarDocumentoCpfCnpjValidator;
     private final EstadoPertenceAPaisValidator estadoPertenceAPaisValidator;
+    private final CupomDescontoValidator cupomDescontoValidator;
     private final CupomDescontoRepository cupomDescontoRepository;
 
 
     @InitBinder
     public void init(WebDataBinder binder) {
-        binder.addValidators(verificarDocumentoCpfCnpjValidator, estadoPertenceAPaisValidator);
+        binder.addValidators(verificarDocumentoCpfCnpjValidator, estadoPertenceAPaisValidator, cupomDescontoValidator);
 
     }
 

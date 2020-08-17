@@ -1,6 +1,7 @@
 package com.jornadadev.casadocodigo.entity;
 
 import lombok.ToString;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,4 +43,15 @@ public class CupomDesconto {
         this.validade = validade;
     }
 
+    public boolean isValido() {
+        return LocalDate.now().compareTo(this.validade) <= 0;
+    }
+
+    public Integer getPercentualDesconto() {
+        return percentual;
+    }
+
+    public LocalDate getValidade() {
+        return this.validade;
+    }
 }

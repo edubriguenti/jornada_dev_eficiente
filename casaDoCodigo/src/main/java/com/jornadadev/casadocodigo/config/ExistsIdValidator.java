@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ExistsIdValidator implements ConstraintValidator<ExistsId, Integer> {
+public class ExistsIdValidator implements ConstraintValidator<ExistsId, Object> {
 
     private final EntityManager em;
     private String domainAttribute;
@@ -22,7 +22,7 @@ public class ExistsIdValidator implements ConstraintValidator<ExistsId, Integer>
     }
 
     @Override
-    public boolean isValid(Integer valor, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object valor, ConstraintValidatorContext constraintValidatorContext) {
         if (valor == null)
             return true;
 
