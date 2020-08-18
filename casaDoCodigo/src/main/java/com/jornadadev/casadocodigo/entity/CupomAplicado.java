@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.entity;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Embeddable;
@@ -19,6 +20,7 @@ public class CupomAplicado {
     @Positive
     @Max(100)
     @NotNull
+    @Getter
     private Integer percentualDescontoMomento;
     @Future
     @NotNull

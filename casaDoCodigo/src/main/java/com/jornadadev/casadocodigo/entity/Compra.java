@@ -1,5 +1,6 @@
 package com.jornadadev.casadocodigo.entity;
 
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.util.Assert;
 
@@ -15,10 +16,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.function.Function;
 
 @ToString
 @Entity
+@Getter
 public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,5 +101,16 @@ public class Compra {
         Assert.isNull(this.cupomAplicado, "Não é possível aplicar um novo cupom para uma compra.");
         Assert.isTrue(cupomDesconto.isValido(), "O cupom de desconto não é válido.");
         this.cupomAplicado = new CupomAplicado(cupomDesconto);
+    }
+
+    public boolean existeCupom() {
+        return cupomAplicado != null;
+    }
+
+    public Integer getValorCupom() {
+        if (existeCupom()) {
+            return cupomAplicado.getPercentualDescontoMomento();
+        }
+        return null;
     }
 }
