@@ -1,4 +1,4 @@
-package com.jornadadev.mercadolivre.cadastro;
+package com.jornadadev.mercadolivre.cadastro.usuario;
 
 import com.jornadadev.mercadolivre.config.UniqueValue;
 import com.jornadadev.mercadolivre.entity.Usuario;

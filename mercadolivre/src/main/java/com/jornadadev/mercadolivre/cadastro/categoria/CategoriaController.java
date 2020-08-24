@@ -1,6 +1,6 @@
-package com.jornadadev.mercadolivre.cadastro;
+package com.jornadadev.mercadolivre.cadastro.categoria;
 
-import com.jornadadev.mercadolivre.entity.Usuario;
+import com.jornadadev.mercadolivre.entity.Categoria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,20 +13,17 @@ import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/categorias")
 @RequiredArgsConstructor
-public class CadastroUsuarioController {
+public class CategoriaController {
 
     private final EntityManager em;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> cadastrar(@Valid @RequestBody CadastroUsuarioRequest cadastroUsuarioRequest) {
-        Usuario usuario = cadastroUsuarioRequest.toModel();
-        em.persist(usuario);
-        System.out.println(usuario);
-        return ResponseEntity.accepted().build();
+    public ResponseEntity<String> cadastrarCategoria(@Valid @RequestBody CategoriaRequest categoriaRequest) {
+        final Categoria categoria = categoriaRequest.toModel(em);
+        em.persist(categoria);
+        return ResponseEntity.accepted().body(categoria.toString());
     }
-
-
 }
