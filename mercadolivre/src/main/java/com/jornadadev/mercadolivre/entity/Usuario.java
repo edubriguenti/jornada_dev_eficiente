@@ -1,5 +1,6 @@
 package com.jornadadev.mercadolivre.entity;
 
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @ToString
+@Getter
 public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
