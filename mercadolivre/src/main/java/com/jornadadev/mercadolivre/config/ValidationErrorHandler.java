@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,6 +23,14 @@ public class ValidationErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
     public ValidationErrorsOutputDto handleValidationError(MethodArgumentNotValidException exception) {
+        final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        final List<ObjectError> globalErrors = exception.getBindingResult().getGlobalErrors();
+        return buildValidationErrors(fieldErrors, globalErrors);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ValidationErrorsOutputDto handleValidationError(BindException exception) {
         final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         final List<ObjectError> globalErrors = exception.getBindingResult().getGlobalErrors();
         return buildValidationErrors(fieldErrors, globalErrors);
