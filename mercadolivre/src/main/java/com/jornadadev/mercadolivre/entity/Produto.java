@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +51,8 @@ public class Produto {
     private Usuario dono;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
     private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
-
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<ImagemProduto> imagens = new HashSet<>();
 
     public Produto(String nome, BigDecimal valor, Integer quantidade, String descricao,
                    Categoria categoria, Usuario dono,
@@ -72,5 +72,14 @@ public class Produto {
     @Deprecated
     protected Produto(){
 
+    }
+
+    public void associaImagens(Set<String> links) {
+        final Set<ImagemProduto> imagens = links.stream().map(link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
+        this.imagens.addAll(imagens);
+    }
+
+    public boolean pertenceAoUsuario(Usuario usuario) {
+        return this.dono.equals(usuario);
     }
 }
