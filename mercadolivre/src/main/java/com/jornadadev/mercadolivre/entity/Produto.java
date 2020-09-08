@@ -78,4 +78,8 @@ public class Produto {
         final Set<ImagemProduto> imagens = links.stream().map(link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
         this.imagens.addAll(imagens);
     }
+
+    public boolean pertenceAoUsuario(Usuario usuario) {
+        return this.dono.equals(usuario);
+    }
 }

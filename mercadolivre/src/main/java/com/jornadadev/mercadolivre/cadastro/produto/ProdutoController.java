@@ -4,6 +4,7 @@ import com.jornadadev.mercadolivre.config.security.UsuarioLogado;
 import com.jornadadev.mercadolivre.entity.Produto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -44,7 +46,8 @@ public class ProdutoController {
 
     @PostMapping(value = "/{id}/imagens")
     @Transactional
-    public String adicionaImagens(@PathVariable("id") Long id, @Valid NovasImagensRequest request) {
+    public String adicionaImagens(@PathVariable("id") Long id, @Valid NovasImagensRequest request,
+                                  @AuthenticationPrincipal UsuarioLogado usuario) {
         log.info(request.toString());
         /*
         1) Enviar as imagens para um bucket
@@ -57,6 +60,9 @@ public class ProdutoController {
         Set<String> links = uploaderFake.upload(request.getImagens());
         log.info(links.toString());
         final Produto produto = em.find(Produto.class, id);
+        if (!produto.pertenceAoUsuario(usuario.get())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         produto.associaImagens(links);
         em.merge(produto);
         return produto.toString();
