@@ -33,6 +33,7 @@ public class Usuario {
 
     @NotEmpty
     @Size(min = 6)
+    @ToString.Exclude
     private String senha;
 
     @NotNull
