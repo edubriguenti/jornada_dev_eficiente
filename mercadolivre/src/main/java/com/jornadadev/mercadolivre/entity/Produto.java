@@ -2,6 +2,7 @@ package com.jornadadev.mercadolivre.entity;
 
 import com.jornadadev.mercadolivre.cadastro.produto.CaracteristicaRequest;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.util.Assert;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,11 +50,16 @@ public class Produto {
     @ManyToOne
     @NotNull
     @Valid
+    @Getter
     private Usuario dono;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
     private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    @ToString.Exclude
+    @Getter
+    private List<Pergunta> perguntas = new ArrayList<>();
 
     public Produto(String nome, BigDecimal valor, Integer quantidade, String descricao,
                    Categoria categoria, Usuario dono,
