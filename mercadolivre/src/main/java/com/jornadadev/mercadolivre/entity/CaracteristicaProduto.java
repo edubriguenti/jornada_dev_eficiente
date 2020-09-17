@@ -1,6 +1,7 @@
 package com.jornadadev.mercadolivre.entity;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
+@Getter
 public class CaracteristicaProduto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -1,5 +1,7 @@
 package com.jornadadev.mercadolivre.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -16,16 +18,21 @@ import javax.validation.constraints.Size;
 
 @Entity
 @ToString
+@EqualsAndHashCode
 public class Opiniao {
 
+    @EqualsAndHashCode.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     @Min(1) @Max(5)
+    @Getter
     private int nota;
     @NotBlank
+    @Getter
     private String titulo;
     @NotBlank @Size(max = 500)
+    @Getter
     private String descricao;
     @NotNull @Valid
     @ManyToOne
