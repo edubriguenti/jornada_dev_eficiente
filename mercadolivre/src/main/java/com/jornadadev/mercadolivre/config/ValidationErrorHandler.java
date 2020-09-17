@@ -36,6 +36,15 @@ public class ValidationErrorHandler {
         return buildValidationErrors(fieldErrors, globalErrors);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ValidationErrorsOutputDto handleValidationError(IllegalArgumentException exception) {
+        ObjectError oe = new ObjectError("Payload", exception.getMessage());
+        final List<ObjectError> globalErrors = List.of(oe);
+        return buildValidationErrors(List.of(), globalErrors);
+    }
+
+
     private ValidationErrorsOutputDto buildValidationErrors(List<FieldError> fieldErrors, List<ObjectError> globalErrors) {
         ValidationErrorsOutputDto validationErrors = new ValidationErrorsOutputDto();
         globalErrors.forEach(error ->  validationErrors.addError(getErrorMessage(error)));

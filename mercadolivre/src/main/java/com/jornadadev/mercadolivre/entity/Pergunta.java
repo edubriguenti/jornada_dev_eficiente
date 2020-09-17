@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @ToString
-public class Pergunta {
+public class Pergunta implements Comparable<Pergunta> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +47,10 @@ public class Pergunta {
 
     public Usuario getDonoDoProduto() {
         return produto.getDono();
+    }
+
+    @Override
+    public int compareTo(Pergunta o) {
+        return this.titulo.compareTo(o.titulo);
     }
 }

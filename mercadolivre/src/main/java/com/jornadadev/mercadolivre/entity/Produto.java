@@ -1,6 +1,8 @@
 package com.jornadadev.mercadolivre.entity;
 
 import com.jornadadev.mercadolivre.cadastro.produto.CaracteristicaRequest;
+import com.jornadadev.mercadolivre.detalheproduto.DetalheProdutoOpiniao;
+import com.jornadadev.mercadolivre.detalheproduto.Opinioes;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,15 +15,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -34,18 +38,23 @@ public class Produto {
     private Long id;
     @NotBlank
     @EqualsAndHashCode.Include
+    @Getter
     private String nome;
     @Positive
     @NotNull
+    @Getter
     private BigDecimal valor;
     @Positive
     @NotNull
+    @Getter
     private Integer quantidade;
     @NotBlank
+    @Getter
     private String descricao;
     @ManyToOne
     @NotNull
     @Valid
+    @Getter
     private Categoria categoria;
     @ManyToOne
     @NotNull
@@ -56,10 +65,13 @@ public class Produto {
     private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "produto")
+    @OrderBy("titulo asc")
     @ToString.Exclude
     @Getter
-    private List<Pergunta> perguntas = new ArrayList<>();
+    private Set<Pergunta> perguntas = new TreeSet<>();
+    @OneToMany(mappedBy = "produto")
+    private Set<Opiniao> opinioes = new HashSet<>();
 
     public Produto(String nome, BigDecimal valor, Integer quantidade, String descricao,
                    Categoria categoria, Usuario dono,
@@ -88,5 +100,24 @@ public class Produto {
 
     public boolean pertenceAoUsuario(Usuario usuario) {
         return this.dono.equals(usuario);
+    }
+
+
+    public <T> List<T> mapCaracteristicas(Function<CaracteristicaProduto, T> funcaoMapeadora) {
+        return this.caracteristicas.stream().map(funcaoMapeadora).collect(Collectors.toList());
+    }
+
+    public <T> List<T> mapImagens(Function<ImagemProduto, T> funcaoMapeadora) {
+        return this.imagens.stream().map(funcaoMapeadora).collect(Collectors.toList());
+    }
+
+    public <T extends Comparable<T>> Set<T> mapPerguntas(Function<Pergunta, T> funcaoMapeadora) {
+        return this.perguntas.stream().map(funcaoMapeadora).collect(Collectors.toCollection(TreeSet::new));
+    }
+
+
+
+    public Opinioes getOpinioes() {
+        return new Opinioes(this.opinioes);
     }
 }

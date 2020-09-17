@@ -1,5 +1,6 @@
 package com.jornadadev.mercadolivre.entity;
 
+import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @ToString
+@Getter
 public class ImagemProduto {
 
     @Id
