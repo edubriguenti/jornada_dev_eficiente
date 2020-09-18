@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Produto {
     @NotNull
     @Getter
     private BigDecimal valor;
-    @Positive
+    @PositiveOrZero
     @NotNull
     @Getter
     private Integer quantidade;
@@ -115,9 +117,16 @@ public class Produto {
         return this.perguntas.stream().map(funcaoMapeadora).collect(Collectors.toCollection(TreeSet::new));
     }
 
-
-
     public Opinioes getOpinioes() {
         return new Opinioes(this.opinioes);
+    }
+
+    public boolean abateEstoque(@Positive int quantidade) {
+        Assert.isTrue(quantidade > 0, "A quantidade deve ser maior do que zero para abater o estoque.");
+        if (quantidade <= this.quantidade) {
+            this.quantidade -= quantidade;
+            return true;
+        }
+        return false;
     }
 }
