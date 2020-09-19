@@ -37,6 +37,7 @@ public class Compra {
     @ManyToOne
     @NotNull
     @Valid
+    @Getter
     private Usuario comprador;
     @Enumerated
     @NotNull
@@ -59,8 +60,17 @@ public class Compra {
     public void adicionaTransacao(RetornoGatewayPagamento request) {
         final Transacao novaTransacao = request.toTransacao(this);
         Assert.isTrue(!this.transacoes.contains(novaTransacao), "Já existe uma transacao igual a essa processada: ".concat(novaTransacao.toString()));
-        final long transacoesComSucesso = this.transacoes.stream().filter(Transacao::concluidaComSucesso).count();
-        Assert.isTrue(transacoesComSucesso == 0, "Essa compra já foi concluída com sucesso.");
+        Assert.isTrue(!processadaComSucesso(), "Essa compra já foi concluída com sucesso.");
         this.transacoes.add(novaTransacao);
+    }
+
+    public boolean processadaComSucesso() {
+        final long transacoesComSucesso = this.transacoes.stream().filter(Transacao::concluidaComSucesso).count();
+        Assert.isTrue(transacoesComSucesso <= 1, "Só pode ter 0 ou 1 transacão concluída com sucesso. Id da compra: "+ id );
+        return transacoesComSucesso > 0;
+    }
+
+    public @NotNull @Valid Usuario getDonoDoProduto() {
+        return this.produtoEscolhido.getDono();
     }
 }
