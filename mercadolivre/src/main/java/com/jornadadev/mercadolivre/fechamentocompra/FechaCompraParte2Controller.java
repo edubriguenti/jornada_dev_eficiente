@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
 public class FechaCompraParte2Controller {
 
     private final EntityManager em;
+    private final NotaFiscal notaFiscal;
+    private final EventosNovaCompra eventosNovaCompra;
 
     @PostMapping
     @Transactional
@@ -43,6 +47,7 @@ public class FechaCompraParte2Controller {
         final Compra compra = em.find(Compra.class, idCompra);
         compra.adicionaTransacao(request);
         em.merge(compra);
+        eventosNovaCompra.processa(compra);
         return ResponseEntity.accepted().body(compra.toString());
     }
 
