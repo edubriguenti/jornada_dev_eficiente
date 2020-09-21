@@ -149,4 +149,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+testdb.mv.db
+testdb.trace.db
+
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,intellij,gradle
