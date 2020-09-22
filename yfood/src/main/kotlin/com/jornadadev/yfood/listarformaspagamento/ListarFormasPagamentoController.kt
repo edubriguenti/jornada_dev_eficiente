@@ -1,6 +1,5 @@
 package com.jornadadev.yfood.listarformaspagamento
 
-import com.jornadadev.yfood.entities.FormasPagamento
 import com.jornadadev.yfood.entities.Restaurante
 import com.jornadadev.yfood.entities.Usuario
 import org.springframework.validation.annotation.Validated
@@ -20,12 +19,13 @@ class ListarFormasPagamentoController(val em: EntityManager) {
 
     @GetMapping
     fun obterFormasPagamento(
-            @NotNull @Positive @RequestParam(value = "idUsuario", required = true) idUsuario: Long,
-            @NotNull @Positive @RequestParam(value = "idRestaurante", required = true) idRestaurante: Long
-    ) : Set<FormasPagamento> {
+            @NotNull @Positive @RequestParam(value = "idUsuario") idUsuario: Long,
+            @NotNull @Positive @RequestParam(value = "idRestaurante") idRestaurante: Long
+    ) : Set<DetalheFormaPagamento> {
 
         val (usuario, restaurante) = validarEntrada(idUsuario, idRestaurante)
-        return usuario.filtraFormasPagamento(restaurante)
+        return usuario.filtraFormasPagamento(restaurante).map { DetalheFormaPagamento(it) }.toSet()
+
     }
 
     private fun validarEntrada(idUsuario: Long, idRestaurante: Long): Pair<Usuario, Restaurante> {

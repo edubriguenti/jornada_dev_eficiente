@@ -24,4 +24,6 @@ data class Restaurante(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id : Long = 0
+
+    fun aceita(formaPagamento: FormasPagamento) = this.formasPagamento.contains(formaPagamento)
 }
