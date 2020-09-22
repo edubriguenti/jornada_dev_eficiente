@@ -29,6 +29,6 @@ data class Usuario(
     var id: Long = 0
 
     fun filtraFormasPagamento(restaurante: Restaurante): Set<FormasPagamento> =
-            this.formasPagamento.filter { restaurante.formasPagamento.contains(it) }.toSet()
+            this.formasPagamento.filter { restaurante.aceita(it) }.toSet()
 
 }
