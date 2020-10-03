@@ -1,6 +1,6 @@
 package com.jornadadev.yfood
 
-import com.jornadadev.yfood.entities.FormasPagamento
+import com.jornadadev.yfood.entities.FormasPagamentoEnum
 import com.jornadadev.yfood.entities.Restaurante
 import com.jornadadev.yfood.entities.Usuario
 import org.springframework.boot.CommandLineRunner
@@ -20,23 +20,23 @@ class YfoodApplication : CommandLineRunner {
     override fun run(vararg args: String?) {
         val seya = Usuario(
                 email = "seya@gmail.com",
-                formasPagamento = setOf(FormasPagamento.VISA, FormasPagamento.MASTERCARD)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD)
         )
         val shiriu = Usuario(
                 email = "shiriu@gmail.com",
-                formasPagamento = setOf(FormasPagamento.VISA, FormasPagamento.ELO, FormasPagamento.DINHEIRO)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.ELO, FormasPagamentoEnum.DINHEIRO)
         )
         val shun = Usuario(
                 email = "shun@gmail.com",
-                formasPagamento = setOf(FormasPagamento.MASTERCARD, FormasPagamento.MAQUINA)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.MAQUINA)
         )
         val iki = Usuario(
                 email = "iki@gmail.com",
-                formasPagamento = setOf(FormasPagamento.DINHEIRO)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.DINHEIRO)
         )
         val hyoga = Usuario(
                 email = "hyoga@gmail.com",
-                formasPagamento = setOf(FormasPagamento.VISA, FormasPagamento.ELO)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.ELO)
         )
 
         em.persist(seya)
@@ -47,21 +47,26 @@ class YfoodApplication : CommandLineRunner {
 
         val sagaSantuario = Restaurante(
                 nome = "Saga Santuario",
-                formasPagamento = setOf<FormasPagamento>(FormasPagamento.VISA, FormasPagamento.MASTERCARD, FormasPagamento.ELO)
+                formasPagamentoEnum = setOf(
+                        FormasPagamentoEnum.VISA,
+                        FormasPagamentoEnum.MASTERCARD,
+                        FormasPagamentoEnum.ELO,
+                        FormasPagamentoEnum.DINHEIRO
+                )
         )
 
         val sagaGuerreirosDeuses = Restaurante(
                 nome = "Saga Guerreiros Deuses",
-                formasPagamento = setOf<FormasPagamento>(FormasPagamento.VISA, FormasPagamento.MASTERCARD, FormasPagamento.ELO)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.ELO)
         )
 
         val sagaPoseydon = Restaurante(
                 nome = "Saga Poseydon",
-                formasPagamento = setOf<FormasPagamento>(FormasPagamento.VISA, FormasPagamento.MASTERCARD, FormasPagamento.ELO)
+                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.ELO)
         )
+        em.persist(sagaSantuario)
         em.persist(sagaGuerreirosDeuses)
         em.persist(sagaPoseydon)
-        em.persist(sagaSantuario)
     }
 }
 
