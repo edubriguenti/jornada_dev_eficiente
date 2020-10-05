@@ -1,5 +1,6 @@
 package com.jornadadev.yfood.entities
 
+import com.jornadadev.yfood.listarformaspagamento.regrasfraude.RegraFraude
 import org.springframework.util.Assert
 import javax.persistence.*
 import javax.validation.constraints.Email
@@ -16,19 +17,35 @@ data class Usuario(
         @Size(min = 1)
         @ElementCollection
         @Enumerated(value = EnumType.STRING)
-        val formasPagamento: Set<FormasPagamento>
+        val formasPagamentoEnum: Set<FormasPagamentoEnum>
 ) {
     init {
         println("Criando objeto Usuario")
         Assert.hasText(email, "Email não pode ser branco.")
-        Assert.isTrue(formasPagamento.isNotEmpty(), "Tipos de pagamento não pode ser vazio.")
+        Assert.isTrue(formasPagamentoEnum.isNotEmpty(), "Tipos de pagamento não pode ser vazio.")
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    fun filtraFormasPagamento(restaurante: Restaurante): Set<FormasPagamento> =
-            this.formasPagamento.filter { restaurante.aceita(it) }.toSet()
+    fun filtraFormasPagamento(restaurante: Restaurante, regrasFraude: Set<RegraFraude>) : Set<FormasPagamentoEnum> {
+        return this.formasPagamentoEnum
+                .filter { restaurante.aceita(it) }
+                .filter { formaPagamento ->
+                    regrasFraude.all {
+                        it.aceita(this, formaPagamento)
+                    }
+                }
+                .toSet()
+    }
+
+    fun podePagar(
+            restaurante: Restaurante,
+            formaPagamento: FormasPagamentoEnum,
+            regrasFraude: Set<RegraFraude>
+    ) : Boolean = filtraFormasPagamento(restaurante, regrasFraude).contains(formaPagamento)
+
+
 
 }
