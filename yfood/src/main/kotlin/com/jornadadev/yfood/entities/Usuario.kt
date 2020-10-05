@@ -40,5 +40,12 @@ data class Usuario(
                 .toSet()
     }
 
+    fun podePagar(
+            restaurante: Restaurante,
+            formaPagamento: FormasPagamentoEnum,
+            regrasFraude: Set<RegraFraude>
+    ) : Boolean = filtraFormasPagamento(restaurante, regrasFraude).contains(formaPagamento)
+
+
 
 }
