@@ -1,5 +1,6 @@
 package com.jornadadev.yfood.pagamentooffline
 
+import com.jornadadev.yfood.entities.Pagamento
 import org.springframework.transaction.support.TransactionTemplate
 import org.springframework.validation.BindException
 import org.springframework.web.bind.WebDataBinder
