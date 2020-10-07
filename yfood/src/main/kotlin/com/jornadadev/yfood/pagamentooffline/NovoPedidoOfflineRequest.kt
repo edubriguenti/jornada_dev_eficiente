@@ -1,10 +1,7 @@
 package com.jornadadev.yfood.pagamentooffline
 
 import com.jornadadev.yfood.config.ExistsId
-import com.jornadadev.yfood.entities.FormasPagamentoEnum
-import com.jornadadev.yfood.entities.Restaurante
-import com.jornadadev.yfood.entities.StatusTransacao
-import com.jornadadev.yfood.entities.Usuario
+import com.jornadadev.yfood.entities.*
 import java.math.BigDecimal
 import javax.persistence.EntityManager
 import javax.validation.constraints.NotNull
