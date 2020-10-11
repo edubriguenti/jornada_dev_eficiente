@@ -1,6 +1,7 @@
 package com.jornadadev.yfood.entities
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.jornadadev.yfood.pagamentoonline.DadosCartao
 import org.springframework.util.Assert
 import java.math.BigDecimal
 import java.util.*
@@ -37,7 +38,7 @@ open class Pagamento(
     @ElementCollection
     val transacoes = mutableSetOf<Transacao>()
     init {
-        transacoes.add(Transacao(status = statusTransacao))
+        transacoes.add(Transacao(statusTransacao = statusTransacao))
     }
 
     companion object {
@@ -75,6 +76,29 @@ open class Pagamento(
     }
 
     fun concluido(): Boolean {
-        return transacoes.any { it.status == StatusTransacao.CONCLUIDA }
+        return transacoes.any { it.temStatus(StatusTransacao.CONCLUIDA) }
+    }
+
+    open fun adicionaTransacao(vararg transacoesGeradas: Transacao) {
+        Assert.state(
+                transacoes.stream()
+                        .noneMatch { transacao: Transacao ->
+                            transacao
+                                    .temStatus(StatusTransacao.CONCLUIDA)
+                        },
+                "Não pode adicionar transacao quando já tem uma marcando que concluiu")
+        Assert.state(transacoes.addAll(transacoesGeradas), "A transação sendo adicionada já existe no pagamento => "
+                + transacoesGeradas)
+    }
+
+    open fun getDadosCartao(): DadosCartao? {
+        Assert.isTrue(formaPagamento.online,
+                "Não tem dado de cartão para forma de pagamento que não é online")
+        Assert.hasText(informacoesAdicionais,
+                "Você deveria ter adicionado informacao adicional relativa ao cartao")
+        val mapper = ObjectMapper()
+
+        return mapper.readValue(informacoesAdicionais,
+                DadosCartao::class.java)
     }
 }

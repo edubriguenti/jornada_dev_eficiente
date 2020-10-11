@@ -6,11 +6,13 @@ import com.jornadadev.yfood.entities.Usuario
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @SpringBootApplication
+@EnableFeignClients
 class YfoodApplication : CommandLineRunner {
 
     @PersistenceContext

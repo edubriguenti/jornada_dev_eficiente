@@ -13,7 +13,7 @@ abstract class Gateway {
     }
 
     protected abstract fun aceiteEspecifico(
-            pagamento: Pagamento?): Boolean
+            pagamento: Pagamento): Boolean
 
     fun processa(pagamento: Pagamento): Resultado<Exception, Transacao> {
         aceita(pagamento)
@@ -28,5 +28,5 @@ abstract class Gateway {
         return custoEspecifico(pagamento)
     }
 
-    protected abstract fun custoEspecifico(pagamento: Pagamento?): BigDecimal
+    protected abstract fun custoEspecifico(pagamento: Pagamento): BigDecimal
 }

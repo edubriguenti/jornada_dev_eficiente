@@ -26,4 +26,8 @@ enum class FormaPagamentoEnum(val online: Boolean, val descricao: String) {
             false,
             "cash"
     );
+
+    open fun pertence(vararg grupo: FormaPagamentoEnum): Boolean {
+        return grupo.any { forma -> forma == this }
+    }
 }
