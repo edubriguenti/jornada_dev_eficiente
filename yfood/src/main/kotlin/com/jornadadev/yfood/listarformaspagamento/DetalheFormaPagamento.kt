@@ -1,10 +1,10 @@
 package com.jornadadev.yfood.listarformaspagamento
 
-import com.jornadadev.yfood.entities.FormasPagamentoEnum
+import com.jornadadev.yfood.entities.FormaPagamentoEnum
 
-class DetalheFormaPagamento(formasPagamentoEnum: FormasPagamentoEnum) {
+class DetalheFormaPagamento(formaPagamentoEnum: FormaPagamentoEnum) {
 
-    val id: String = formasPagamentoEnum.name
-    val descricao: String = formasPagamentoEnum.descricao
+    val id: String = formaPagamentoEnum.name
+    val descricao: String = formaPagamentoEnum.descricao
 
 }

@@ -23,8 +23,8 @@ internal class ConcluiCompraOfflineConstrollerTest {
         pagamento = Pagamento(
                 idPedido = 1L,
                 valor = BigDecimal.TEN,
-                usuario = Usuario("email@email.com", setOf(FormasPagamentoEnum.DINHEIRO)),
-                restaurante = Restaurante("Restaurante 1", setOf(FormasPagamentoEnum.DINHEIRO)),
+                usuario = Usuario("email@email.com", setOf(FormaPagamentoEnum.DINHEIRO)),
+                restaurante = Restaurante("Restaurante 1", setOf(FormaPagamentoEnum.DINHEIRO)),
                 statusTransacao = StatusTransacao.ESPERANDO_CONFIRMACAO_PAGAMENTO
         )
     }

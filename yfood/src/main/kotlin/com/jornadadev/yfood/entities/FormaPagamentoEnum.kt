@@ -1,6 +1,6 @@
 package com.jornadadev.yfood.entities
 
-enum class FormasPagamentoEnum(val online: Boolean, val descricao: String) {
+enum class FormaPagamentoEnum(val online: Boolean, val descricao: String) {
 
     VISA(
             online = true,

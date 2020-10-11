@@ -1,6 +1,5 @@
 package com.jornadadev.yfood.entities
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.lang.IllegalStateException
@@ -11,8 +10,8 @@ class PagamentoTest {
     val pagamento = Pagamento(
             idPedido = 1L,
             valor = BigDecimal.ZERO,
-            usuario = Usuario("email@email.com", setOf(FormasPagamentoEnum.DINHEIRO)),
-            restaurante = Restaurante("Restaurante 1", setOf(FormasPagamentoEnum.DINHEIRO)),
+            usuario = Usuario("email@email.com", setOf(FormaPagamentoEnum.DINHEIRO)),
+            restaurante = Restaurante("Restaurante 1", setOf(FormaPagamentoEnum.DINHEIRO)),
             statusTransacao = StatusTransacao.ESPERANDO_CONFIRMACAO_PAGAMENTO
     )
 

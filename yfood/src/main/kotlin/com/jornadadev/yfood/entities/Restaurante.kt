@@ -13,11 +13,11 @@ data class Restaurante(
         @NotNull
         @Size(min=1)
         @ElementCollection
-        val formasPagamentoEnum: Set<FormasPagamentoEnum>
+        val formaPagamentoEnum: Set<FormaPagamentoEnum>
 ) {
     init {
         Assert.hasText(nome, "Nome do restaurante não pode ser vazio.")
-        Assert.isTrue(formasPagamentoEnum.isNotEmpty(), "Formas de pagamento não pode ser vazio.")
+        Assert.isTrue(formaPagamentoEnum.isNotEmpty(), "Formas de pagamento não pode ser vazio.")
         println("Objeto restaurante criado.")
     }
 
@@ -25,5 +25,5 @@ data class Restaurante(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id : Long = 0
 
-    fun aceita(formaPagamentoEnum: FormasPagamentoEnum) = this.formasPagamentoEnum.contains(formaPagamentoEnum)
+    fun aceita(formaPagamentoEnum: FormaPagamentoEnum) = this.formaPagamentoEnum.contains(formaPagamentoEnum)
 }

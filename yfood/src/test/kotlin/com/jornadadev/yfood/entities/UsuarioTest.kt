@@ -18,24 +18,24 @@ internal class UsuarioTest {
 
     val seya = Usuario(
             email = "seya@gmail.com",
-            formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD)
+            formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD)
     )
 
     val sagaSantuario = Restaurante(
             nome = "Saga Santuario",
-            formasPagamentoEnum = setOf(FormasPagamentoEnum.MAQUINA)
+            formaPagamentoEnum = setOf(FormaPagamentoEnum.MAQUINA)
     )
 
     val sagaGuerreirosDeuses = Restaurante(
             nome = "Saga Guerreiros Deuses",
-            formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.ELO)
+            formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD, FormaPagamentoEnum.ELO)
     )
 
 //    val regraFiltro = Mockito.mock(RegraFraude::class.java)
 //    val regrasFiltro = setOf(regraFiltro)
 
     val regraAceita = object : RegraFraude {
-        override fun aceita(usuario: Usuario, formaPagamento: FormasPagamentoEnum): Boolean {
+        override fun aceita(usuario: Usuario, formaPagamento: FormaPagamentoEnum): Boolean {
             return true
         }
     }
@@ -54,7 +54,7 @@ internal class UsuarioTest {
 
         //ASSERT
         assertEquals(2, formasPagamentos.size)
-        assertTrue(formasPagamentos.containsAll(listOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD)))
+        assertTrue(formasPagamentos.containsAll(listOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD)))
     }
 
     @Test
@@ -69,7 +69,7 @@ internal class UsuarioTest {
     @Test
     fun `Deve retornar vazio se a regra de fraude retornar falso`() {
         val regraFalsa = object : RegraFraude {
-            override fun aceita(usuario: Usuario, formaPagamento: FormasPagamentoEnum): Boolean {
+            override fun aceita(usuario: Usuario, formaPagamento: FormaPagamentoEnum): Boolean {
                 return false
             }
         }

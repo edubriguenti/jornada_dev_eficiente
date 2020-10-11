@@ -22,6 +22,7 @@ repositories {
 	mavenCentral()
 }
 
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -29,11 +30,18 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom ("org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR8")
 	}
 }
 
