@@ -1,6 +1,6 @@
 package com.jornadadev.yfood.listarformaspagamento.regrasfraude
 
-import com.jornadadev.yfood.entities.FormasPagamentoEnum
+import com.jornadadev.yfood.entities.FormaPagamentoEnum
 import com.jornadadev.yfood.entities.Usuario
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -15,11 +15,11 @@ internal class RegraUsuarioEmailFraudulentoTest {
         //Arrange
         val usuarioFraudulento = Usuario(
                 email= "fraudador1@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.DINHEIRO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.DINHEIRO)
         );
 
         //ACT
-        val aceita = regra.aceita(usuario = usuarioFraudulento, formaPagamento = FormasPagamentoEnum.VISA)
+        val aceita = regra.aceita(usuario = usuarioFraudulento, formaPagamento = FormaPagamentoEnum.VISA)
 
         //ASSERT
         assertFalse(aceita)
@@ -30,11 +30,11 @@ internal class RegraUsuarioEmailFraudulentoTest {
         //Arrange
         val usuarioFraudulento = Usuario(
                 email= "fraudador1@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.DINHEIRO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.DINHEIRO)
         );
 
         //ACT
-        val aceita = regra.aceita(usuario = usuarioFraudulento, formaPagamento = FormasPagamentoEnum.DINHEIRO)
+        val aceita = regra.aceita(usuario = usuarioFraudulento, formaPagamento = FormaPagamentoEnum.DINHEIRO)
 
         //ASSERT
         assertTrue(aceita)

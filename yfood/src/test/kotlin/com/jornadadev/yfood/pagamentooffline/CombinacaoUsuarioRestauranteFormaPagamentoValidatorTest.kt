@@ -1,6 +1,6 @@
 package com.jornadadev.yfood.pagamentooffline
 
-import com.jornadadev.yfood.entities.FormasPagamentoEnum
+import com.jornadadev.yfood.entities.FormaPagamentoEnum
 import com.jornadadev.yfood.entities.Restaurante
 import com.jornadadev.yfood.entities.Usuario
 import com.jornadadev.yfood.listarformaspagamento.regrasfraude.RegraFraude
@@ -16,14 +16,14 @@ internal class CombinacaoUsuarioRestauranteFormaPagamentoValidatorTest {
     fun `verifica se a combinacao usuario, restaurante e formaPagamento é válida` () {
         val em = mock(EntityManager::class.java)
         val regraFraude = object : RegraFraude {
-            override fun aceita(usuario: Usuario, formaPagamento: FormasPagamentoEnum): Boolean {
+            override fun aceita(usuario: Usuario, formaPagamento: FormaPagamentoEnum): Boolean {
               return true
             }
         }
         val regras = setOf<RegraFraude>(regraFraude)
-        val usuarioDinheiro = Usuario("edu@edu.com", setOf(FormasPagamentoEnum.DINHEIRO))
-        val restauranteDinheiro = Restaurante("restaurante@edu.com", setOf(FormasPagamentoEnum.DINHEIRO))
-        val request = NovoPedidoOfflineRequest(FormasPagamentoEnum.DINHEIRO, 1, 1)
+        val usuarioDinheiro = Usuario("edu@edu.com", setOf(FormaPagamentoEnum.DINHEIRO))
+        val restauranteDinheiro = Restaurante("restaurante@edu.com", setOf(FormaPagamentoEnum.DINHEIRO))
+        val request = NovoPedidoOfflineRequest(FormaPagamentoEnum.DINHEIRO, 1, 1)
         val errors = mock(Errors::class.java)
         `when`(em.find(Usuario::class.java, 1L)).thenReturn(usuarioDinheiro)
         `when`(em.find(Restaurante::class.java, 1L)).thenReturn(restauranteDinheiro)
@@ -40,14 +40,14 @@ internal class CombinacaoUsuarioRestauranteFormaPagamentoValidatorTest {
     fun `verifica se a combinacao usuario, restaurante e formaPagamento não é válida` () {
         val em = mock(EntityManager::class.java)
         val regraFraude = object : RegraFraude {
-            override fun aceita(usuario: Usuario, formaPagamento: FormasPagamentoEnum): Boolean {
+            override fun aceita(usuario: Usuario, formaPagamento: FormaPagamentoEnum): Boolean {
                 return true
             }
         }
         val regras = setOf<RegraFraude>(regraFraude)
-        val usuarioVISA = Usuario("edu@edu.com", setOf(FormasPagamentoEnum.VISA))
-        val restauranteDinheiro = Restaurante("restaurante@edu.com", setOf(FormasPagamentoEnum.DINHEIRO))
-        val request = NovoPedidoOfflineRequest(FormasPagamentoEnum.DINHEIRO, 1, 1)
+        val usuarioVISA = Usuario("edu@edu.com", setOf(FormaPagamentoEnum.VISA))
+        val restauranteDinheiro = Restaurante("restaurante@edu.com", setOf(FormaPagamentoEnum.DINHEIRO))
+        val request = NovoPedidoOfflineRequest(FormaPagamentoEnum.DINHEIRO, 1, 1)
         val errors = mock(Errors::class.java)
         `when`(em.find(Usuario::class.java, 1L)).thenReturn(usuarioVISA)
         `when`(em.find(Restaurante::class.java, 1L)).thenReturn(restauranteDinheiro)

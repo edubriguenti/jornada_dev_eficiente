@@ -3,6 +3,7 @@ package com.jornadadev.yfood.pagamentooffline
 import com.jornadadev.yfood.entities.Restaurante
 import com.jornadadev.yfood.entities.Usuario
 import com.jornadadev.yfood.listarformaspagamento.regrasfraude.RegraFraude
+import com.jornadadev.yfood.pagamentoonline.TemCombinacaoUsuarioRestauranteFormaPagamento
 import org.springframework.stereotype.Component
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
@@ -14,17 +15,17 @@ class CombinacaoUsuarioRestauranteFormaPagamentoValidator(
         val regrasFraude: Set<RegraFraude>
 ) : Validator {
     override fun supports(clazz: Class<*>): Boolean =
-            clazz.isAssignableFrom(NovoPedidoOfflineRequest::class.java)
+            clazz.isAssignableFrom(TemCombinacaoUsuarioRestauranteFormaPagamento::class.java)
 
 
     override fun validate(target: Any, errors: Errors) {
         if (errors.hasErrors()) return
 
-        val request = target as NovoPedidoOfflineRequest
-        val usuario = em.find(Usuario::class.java, request.idUsuario)
-        val restaurante = em.find(Restaurante::class.java, request.idRestaurante)
+        val request = target as TemCombinacaoUsuarioRestauranteFormaPagamento
+        val usuario = em.find(Usuario::class.java, request.getIdUsuario())
+        val restaurante = em.find(Restaurante::class.java, request.getIdRestaurante())
 
-        val podePagar = usuario.podePagar(restaurante, request.formaPagamento, regrasFraude)
+        val podePagar = usuario.podePagar(restaurante, request.getFormaPagamento(), regrasFraude)
         if (!podePagar) {
             errors.rejectValue(
                     "formaPagamento",

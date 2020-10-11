@@ -17,20 +17,20 @@ data class Usuario(
         @Size(min = 1)
         @ElementCollection
         @Enumerated(value = EnumType.STRING)
-        val formasPagamentoEnum: Set<FormasPagamentoEnum>
+        val formaPagamentoEnum: Set<FormaPagamentoEnum>
 ) {
     init {
         println("Criando objeto Usuario")
         Assert.hasText(email, "Email não pode ser branco.")
-        Assert.isTrue(formasPagamentoEnum.isNotEmpty(), "Tipos de pagamento não pode ser vazio.")
+        Assert.isTrue(formaPagamentoEnum.isNotEmpty(), "Tipos de pagamento não pode ser vazio.")
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    fun filtraFormasPagamento(restaurante: Restaurante, regrasFraude: Set<RegraFraude>) : Set<FormasPagamentoEnum> {
-        return this.formasPagamentoEnum
+    fun filtraFormasPagamento(restaurante: Restaurante, regrasFraude: Set<RegraFraude>) : Set<FormaPagamentoEnum> {
+        return this.formaPagamentoEnum
                 .filter { restaurante.aceita(it) }
                 .filter { formaPagamento ->
                     regrasFraude.all {
@@ -42,7 +42,7 @@ data class Usuario(
 
     fun podePagar(
             restaurante: Restaurante,
-            formaPagamento: FormasPagamentoEnum,
+            formaPagamento: FormaPagamentoEnum,
             regrasFraude: Set<RegraFraude>
     ) : Boolean = filtraFormasPagamento(restaurante, regrasFraude).contains(formaPagamento)
 

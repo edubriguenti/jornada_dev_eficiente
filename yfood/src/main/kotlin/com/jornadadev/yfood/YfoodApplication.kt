@@ -1,16 +1,18 @@
 package com.jornadadev.yfood
 
-import com.jornadadev.yfood.entities.FormasPagamentoEnum
+import com.jornadadev.yfood.entities.FormaPagamentoEnum
 import com.jornadadev.yfood.entities.Restaurante
 import com.jornadadev.yfood.entities.Usuario
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @SpringBootApplication
+@EnableFeignClients
 class YfoodApplication : CommandLineRunner {
 
     @PersistenceContext
@@ -20,23 +22,23 @@ class YfoodApplication : CommandLineRunner {
     override fun run(vararg args: String?) {
         val seya = Usuario(
                 email = "seya@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD)
         )
         val shiriu = Usuario(
                 email = "shiriu@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.ELO, FormasPagamentoEnum.DINHEIRO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.ELO, FormaPagamentoEnum.DINHEIRO)
         )
         val shun = Usuario(
                 email = "shun@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.MAQUINA)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.MASTERCARD, FormaPagamentoEnum.MAQUINA)
         )
         val iki = Usuario(
                 email = "iki@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.DINHEIRO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.DINHEIRO)
         )
         val hyoga = Usuario(
                 email = "hyoga@gmail.com",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.ELO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.ELO)
         )
 
         em.persist(seya)
@@ -47,22 +49,22 @@ class YfoodApplication : CommandLineRunner {
 
         val sagaSantuario = Restaurante(
                 nome = "Saga Santuario",
-                formasPagamentoEnum = setOf(
-                        FormasPagamentoEnum.VISA,
-                        FormasPagamentoEnum.MASTERCARD,
-                        FormasPagamentoEnum.ELO,
-                        FormasPagamentoEnum.DINHEIRO
+                formaPagamentoEnum = setOf(
+                        FormaPagamentoEnum.VISA,
+                        FormaPagamentoEnum.MASTERCARD,
+                        FormaPagamentoEnum.ELO,
+                        FormaPagamentoEnum.DINHEIRO
                 )
         )
 
         val sagaGuerreirosDeuses = Restaurante(
                 nome = "Saga Guerreiros Deuses",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.ELO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD, FormaPagamentoEnum.ELO)
         )
 
         val sagaPoseydon = Restaurante(
                 nome = "Saga Poseydon",
-                formasPagamentoEnum = setOf(FormasPagamentoEnum.VISA, FormasPagamentoEnum.MASTERCARD, FormasPagamentoEnum.ELO)
+                formaPagamentoEnum = setOf(FormaPagamentoEnum.VISA, FormaPagamentoEnum.MASTERCARD, FormaPagamentoEnum.ELO)
         )
         em.persist(sagaSantuario)
         em.persist(sagaGuerreirosDeuses)
