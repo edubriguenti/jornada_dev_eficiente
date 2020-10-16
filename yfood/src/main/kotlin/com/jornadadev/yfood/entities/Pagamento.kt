@@ -79,7 +79,7 @@ open class Pagamento(
         return transacoes.any { it.temStatus(StatusTransacao.CONCLUIDA) }
     }
 
-    open fun adicionaTransacao(vararg transacoesGeradas: Transacao) {
+    open fun adicionaTransacao(transacoesGeradas: List<Transacao>) {
         Assert.state(
                 transacoes.stream()
                         .noneMatch { transacao: Transacao ->
