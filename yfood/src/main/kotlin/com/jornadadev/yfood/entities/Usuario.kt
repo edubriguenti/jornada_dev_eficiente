@@ -18,7 +18,10 @@ data class Usuario(
         @ElementCollection
         @Enumerated(value = EnumType.STRING)
         val formaPagamentoEnum: Set<FormaPagamentoEnum>
+
 ) {
+    @OneToMany(mappedBy = "usuario", cascade = [CascadeType.MERGE])
+    private val selecoes: MutableList<RestauranteSelecionado> = mutableListOf()
     init {
         println("Criando objeto Usuario")
         Assert.hasText(email, "Email não pode ser branco.")
@@ -46,6 +49,16 @@ data class Usuario(
             regrasFraude: Set<RegraFraude>
     ) : Boolean = filtraFormasPagamento(restaurante, regrasFraude).contains(formaPagamento)
 
+    fun registraSelecao(restaurante: Restaurante) {
+        selecoes.add(RestauranteSelecionado(usuario = this, restaurante = restaurante))
+    }
+
+    fun selecionou(restaurante: Restaurante, nVezes: Int): Boolean {
+        val count = this.selecoes.count {
+            it.restaurante == restaurante
+        }
+        return count >= nVezes
+    }
 
 
 }
